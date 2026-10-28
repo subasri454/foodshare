@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 export default function Requests() {
-  const API_URL = "http://localhost:5000/api";
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("All");

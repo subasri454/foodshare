@@ -44,3 +44,5 @@ backend/uploads/*
 # OS files
 Thumbs.db
 Desktop.ini
+
+backend/aiven-client.cnf

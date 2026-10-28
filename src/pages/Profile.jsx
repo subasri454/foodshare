@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Camera, X, UserRound, Pencil, LoaderCircle } from "lucide-react";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
@@ -366,3 +366,4 @@ export default function Profile() {
     </div>
   );
 }
+

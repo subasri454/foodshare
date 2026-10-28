@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API_URL from "../config/api";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Mail,
@@ -34,7 +35,7 @@ export default function Login() {
   e.preventDefault();
 
   try {
-    const response = await fetch("http://localhost:5000/api/login", {
+    const response = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

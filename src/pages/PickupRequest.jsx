@@ -13,7 +13,7 @@ import {
   Clock,
 } from "lucide-react";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 function displayValue(value, fallback = "Not provided") {
   if (value === null || value === undefined || value === "") {
@@ -359,7 +359,7 @@ export default function PickupRequest() {
                     src={
                       String(food.image).startsWith("http")
                         ? food.image
-                        : `http://localhost:5000${
+                        : `${(import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace("/api", "")}${
                             String(food.image).startsWith("/")
                               ? food.image
                               : `/${food.image}`

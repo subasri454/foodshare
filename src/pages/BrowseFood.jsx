@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:5000/api";
+import API_URL from "../config/api";
 
 export default function BrowseFood() {
   const [category, setCategory] = useState("All");
@@ -249,3 +249,4 @@ export default function BrowseFood() {
     </div>
   );
 }
+
