@@ -1,0 +1,338 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================= */
+/* Global Reset */
+/* ============================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 18px;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f3f4f6;
+  color: #111827;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================= */
+/* Headings */
+/* ============================= */
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* ============================= */
+/* Text */
+/* ============================= */
+
+p,
+label,
+span,
+li {
+  font-size: 1.05rem;
+}
+
+/* ============================= */
+/* Inputs */
+/* ============================= */
+
+input,
+textarea,
+select {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ============================= */
+/* Buttons */
+/* ============================= */
+
+button {
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+/* ============================= */
+/* Donate Food Page */
+/* ============================= */
+
+@layer components {
+  .label {
+    @apply block text-sm font-semibold text-gray-800;
+  }
+
+  .required {
+    @apply text-red-500;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-gray-300 bg-white
+    px-3 py-2.5 text-sm text-gray-700 outline-none transition;
+  }
+
+  .input:focus {
+    @apply border-green-500 ring-1 ring-green-200;
+  }
+
+  textarea.input {
+    @apply resize-none;
+  }
+
+  select.input {
+    @apply cursor-pointer;
+  }
+}
+
+/* ============================= */
+/* FoodShare Dark Theme */
+/* ============================= */
+
+html.dark body {
+  background-color: #111827 !important;
+  color: #f3f4f6 !important;
+}
+
+/* Main content areas */
+
+html.dark main {
+  background-color: #111827 !important;
+  color: #f3f4f6 !important;
+}
+
+/* Ensure text inherits readable colors by default */
+
+html.dark main h1,
+html.dark main h2,
+html.dark main h3,
+html.dark main h4,
+html.dark main p,
+html.dark main label,
+html.dark main li,
+html.dark main td,
+html.dark main th {
+  color: inherit;
+}
+
+/* Light cards and containers */
+
+html.dark main [class~="bg-white"],
+html.dark main [class~="bg-gray-50"],
+html.dark main [class~="bg-gray-100"],
+html.dark main [class~="bg-[#f4f7f5]"],
+html.dark main [class~="bg-[#f5f8f7]"] {
+  background-color: #1f2937 !important;
+}
+
+/* Readable text colors */
+
+html.dark main [class~="text-gray-900"],
+html.dark main [class~="text-gray-800"],
+html.dark main [class~="text-gray-700"],
+html.dark main [class~="text-black"] {
+  color: #f3f4f6 !important;
+}
+
+html.dark main [class~="text-gray-600"],
+html.dark main [class~="text-gray-500"],
+html.dark main [class~="text-gray-400"] {
+  color: #d1d5db !important;
+}
+
+/* Borders */
+
+html.dark main [class~="border-gray-100"],
+html.dark main [class~="border-gray-200"],
+html.dark main [class~="border-gray-300"] {
+  border-color: #4b5563 !important;
+}
+
+/* Input fields */
+
+html.dark main input,
+html.dark main textarea,
+html.dark main select {
+  background-color: #374151 !important;
+  color: #f9fafb !important;
+  border-color: #4b5563 !important;
+}
+
+html.dark main input::placeholder,
+html.dark main textarea::placeholder {
+  color: #d1d5db !important;
+  opacity: 1;
+}
+
+/* Dropdown options */
+
+html.dark main option {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+/* Tables */
+
+html.dark main table {
+  color: #f3f4f6;
+}
+
+html.dark main thead {
+  background-color: #1f2937;
+}
+
+html.dark main tbody tr {
+  border-color: #4b5563;
+}
+
+/* Preserve green donor and receiver sidebars */
+
+html.dark aside {
+  background-color: #064b3a;
+}
+
+/* Keep white text visible on green buttons */
+
+html.dark main button[class~="bg-green-600"],
+html.dark main button[class~="bg-emerald-600"],
+html.dark main button[class~="bg-emerald-700"],
+html.dark main button[class~="bg-[#064b3a]"],
+html.dark main button[class~="bg-[#063b2c]"] {
+  color: #ffffff !important;
+}
+
+/* Icons should remain visible */
+
+html.dark main svg {
+  flex-shrink: 0;
+}
+
+/* Links */
+
+html.dark main a {
+  transition: color 0.2s ease;
+}
+
+/* Disabled controls */
+
+html.dark main button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================= */
+/* Scrollbar */
+/* ============================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #111827;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #4b5563;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* ============================= */
+/* Responsive Design */
+/* ============================= */
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  p,
+  label,
+  span,
+  li {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 12px 16px;
+  }
+}

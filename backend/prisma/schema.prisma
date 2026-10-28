@@ -1,0 +1,177 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id                 Int       @id @default(autoincrement())
+  name               String    @db.VarChar(100)
+  email              String    @unique(map: "email") @db.VarChar(150)
+  password           String    @db.VarChar(255)
+  phone              String?   @db.VarChar(20)
+  role               users_role
+  profile_image      String?   @db.VarChar(255)
+  is_email_verified  Boolean   @default(true)
+  created_at         DateTime? @default(now()) @db.Timestamp(0)
+
+  food_requests         food_requests[]
+  donations             food_donations[]
+  sent_messages         messages[] @relation("sent_messages")
+  received_messages     messages[] @relation("received_messages")
+  notifications         notifications[]
+  pickupRequests        pickup_requests[]
+  password_reset_tokens password_reset_tokens[]
+}
+
+model pending_registrations {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(100)
+  email      String    @unique @db.VarChar(150)
+  password   String    @db.VarChar(255)
+  phone      String?   @db.VarChar(20)
+  role       users_role
+  otp_hash   String    @db.VarChar(255)
+  expires_at DateTime
+  attempts   Int       @default(0)
+  created_at DateTime  @default(now())
+
+  @@index([expires_at])
+}
+
+model password_reset_tokens {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  token_hash String   @db.VarChar(255)
+  expires_at DateTime
+  created_at DateTime @default(now())
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id])
+  @@index([expires_at])
+}
+
+model food_donations {
+  id                   Int             @id @default(autoincrement())
+  donor_id             Int
+  food_name            String          @db.VarChar(150)
+  description          String?         @db.VarChar(500)
+  detailed_description String?         @db.Text
+  food_type            String?         @db.VarChar(100)
+  food_condition       String?         @db.VarChar(100)
+  food_category        String?         @db.VarChar(100)
+  quantity             String          @db.VarChar(100)
+  location             String?         @db.VarChar(255)
+  image                String?         @db.VarChar(255)
+  preparation_date     DateTime?       @db.Date
+  preparation_time     String?         @db.VarChar(20)
+  expiry_date          DateTime?       @db.Date
+  expiry_time          String?         @db.VarChar(20)
+  fresh_for            String?         @db.VarChar(100)
+  ingredients          String?         @db.Text
+  allergens            String?         @db.Text
+  storage              String?         @db.VarChar(255)
+  pickup_date          DateTime?       @db.Date
+  pickup_time          String?         @db.VarChar(20)
+  pickup_instructions  String?         @db.Text
+  contact_person       String?         @db.VarChar(100)
+  contact_phone        String?         @db.VarChar(20)
+  alternate_phone      String?         @db.VarChar(20)
+  email                String?         @db.VarChar(150)
+  status               donation_status @default(available)
+  created_at           DateTime?       @default(now()) @db.Timestamp(0)
+
+  donor           users            @relation(fields: [donor_id], references: [id], onDelete: Cascade)
+  pickup_requests pickup_requests[]
+
+  @@index([donor_id])
+  @@index([status])
+}
+
+model food_requests {
+  id          Int                 @id @default(autoincrement())
+  receiver_id Int
+  food_name   String              @db.VarChar(150)
+  quantity    String              @db.VarChar(100)
+  status      food_request_status @default(pending)
+  created_at  DateTime?           @default(now()) @db.Timestamp(0)
+
+  receiver users @relation(fields: [receiver_id], references: [id], onDelete: Cascade, map: "fk_food_requests_receiver")
+
+  @@index([receiver_id], map: "fk_food_requests_receiver")
+}
+
+model pickup_requests {
+  id          Int           @id @default(autoincrement())
+  donation_id Int
+  receiver_id Int
+  status      pickup_status @default(pending)
+  pickup_date DateTime?
+  created_at  DateTime?     @default(now()) @db.Timestamp(0)
+
+  donation food_donations @relation(fields: [donation_id], references: [id], onDelete: Cascade)
+  receiver users          @relation(fields: [receiver_id], references: [id], onDelete: Cascade)
+
+  @@index([donation_id])
+  @@index([receiver_id])
+}
+
+model messages {
+  id          Int       @id @default(autoincrement())
+  sender_id   Int
+  receiver_id Int
+  message     String    @db.Text
+  created_at  DateTime? @default(now()) @db.Timestamp(0)
+
+  sender   users @relation("sent_messages", fields: [sender_id], references: [id], onDelete: Cascade)
+  receiver users @relation("received_messages", fields: [receiver_id], references: [id], onDelete: Cascade)
+
+  @@index([sender_id])
+  @@index([receiver_id])
+}
+
+model notifications {
+  id         Int       @id @default(autoincrement())
+  user_id    Int
+  title      String    @db.VarChar(150)
+  message    String    @db.VarChar(500)
+  is_read    Boolean   @default(false)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+enum users_role {
+  donor
+  receiver
+}
+
+enum food_request_status {
+  pending
+  accepted
+  rejected
+  completed
+  cancelled
+}
+
+enum donation_status {
+  available
+  reserved
+  completed
+  cancelled
+}
+
+enum pickup_status {
+  pending
+  accepted
+  rejected
+  completed
+  cancelled
+}
